@@ -1,6 +1,9 @@
-const http = require("http");
-const routes = require("./routes");
+const http = require('http');
 
-const server = http.createServer(routes);
+const routes = require('./routes');
 
-server.listen(3000); // nodeJS will not close script, will keep running and listen for incoming requests.
+console.log(routes.someText);
+
+const server = http.createServer(routes.handler);
+
+server.listen(3000);
