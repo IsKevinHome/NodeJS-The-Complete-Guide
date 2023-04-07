@@ -1,22 +1,24 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-// app.use function runs every request (middleware)
-// app.use((req, res, next) => {
-//     console.log("Inside the middleware");
-//     next(); // Allows the request to continue to the next middleware.
-// });
+app.use(bodyParser.urlencoded({ extended: false })); // parses incoming request body (req.body will be undefined by default)
 
 // Remember middleware runs top to bottom.
 app.use("/add-product", (req, res, next) => {
-    console.log("In another middleware");
-    res.send("<h1>Add Product</h1>");
+    res.send(
+        '<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>'
+    );
+});
+
+app.use("/product", (req, res, next) => {
+    console.log(req.body);
+    res.redirect("/");
 });
 
 app.use("/", (req, res, next) => {
     // the '/' here will run anytime that '/' is included
-    console.log("Inside the middleware");
     res.send("<h1>Hello from express</h1>");
 });
 
